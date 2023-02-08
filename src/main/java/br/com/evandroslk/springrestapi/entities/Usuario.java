@@ -1,4 +1,4 @@
-package br.com.evandroslk.springrestapi.model;
+package br.com.evandroslk.springrestapi.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
