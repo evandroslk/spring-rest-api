@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.evandroslk.springrestapi.dto.UsuarioDTO;
 import br.com.evandroslk.springrestapi.entities.Usuario;
+import br.com.evandroslk.springrestapi.repositories.TelefoneRepository;
 import br.com.evandroslk.springrestapi.repositories.UsuarioRepository;
 import br.com.evandroslk.springrestapi.services.exceptions.ResourceNotFoundException;
 
@@ -20,16 +21,19 @@ import br.com.evandroslk.springrestapi.services.exceptions.ResourceNotFoundExcep
 public class UsuarioService {
 
 	@Autowired
-	private UsuarioRepository repository;
+	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private TelefoneRepository telefoneRepository;
 
 	public List<UsuarioDTO> findAll() {
-		List<Usuario> lista = repository.findAll();
+		List<Usuario> lista = usuarioRepository.findAll();
 		return lista.stream().map(x -> new UsuarioDTO(x, x.getTelefones()))
 				.collect(Collectors.toList());
 	}
 
 	public UsuarioDTO findById(Long id) {
-		Optional<Usuario> obj = repository.findById(id);
+		Optional<Usuario> obj = usuarioRepository.findById(id);
 		Usuario usuario = obj.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
 		return new UsuarioDTO(usuario, usuario.getTelefones());
 	}
@@ -38,15 +42,15 @@ public class UsuarioService {
 	public UsuarioDTO insert(UsuarioDTO dto) {
 		Usuario usuario = new Usuario();
 		copyDtoToEntity(dto, usuario);
-		return new UsuarioDTO(repository.save(usuario));
+		return new UsuarioDTO(usuarioRepository.save(usuario));
 	}
 
 	@Transactional
 	public UsuarioDTO update(Long id, UsuarioDTO dto) {
 		try {
-			Usuario usuario = repository.getReferenceById(id);
+			Usuario usuario = usuarioRepository.getReferenceById(id);
 			copyDtoToEntity(dto, usuario);
-			return new UsuarioDTO(repository.save(usuario));
+			return new UsuarioDTO(usuarioRepository.save(usuario));
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}
@@ -55,7 +59,7 @@ public class UsuarioService {
 	@Transactional
 	public void delete(Long id) {
 		try {
-			repository.deleteById(id);
+			usuarioRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Id not found " + id);
 		}

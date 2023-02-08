@@ -7,6 +7,10 @@ public class TelefoneDTO {
 	private Long id;
 	private String numero;
 
+	public TelefoneDTO() {
+
+	}
+
 	public TelefoneDTO(Telefone telefone) {
 		this.id = telefone.getId();
 		this.numero = telefone.getNumero();
