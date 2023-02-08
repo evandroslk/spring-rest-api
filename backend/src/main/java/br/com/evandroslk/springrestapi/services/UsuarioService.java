@@ -24,14 +24,14 @@ public class UsuarioService {
 
 	public List<UsuarioDTO> findAll() {
 		List<Usuario> lista = repository.findAll();
-		return lista.stream().map(x -> new UsuarioDTO(x))
+		return lista.stream().map(x -> new UsuarioDTO(x, x.getTelefones()))
 				.collect(Collectors.toList());
 	}
 
 	public UsuarioDTO findById(Long id) {
 		Optional<Usuario> obj = repository.findById(id);
 		Usuario usuario = obj.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-		return new UsuarioDTO(usuario);
+		return new UsuarioDTO(usuario, usuario.getTelefones());
 	}
 
 	@Transactional
@@ -66,6 +66,5 @@ public class UsuarioService {
 		usuario.setLogin(dto.getLogin());
 		usuario.setSenha(dto.getSenha());
 	}
-
 
 }
