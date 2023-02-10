@@ -8,6 +8,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,7 +66,10 @@ public class UsuarioService {
 		Usuario usuario = new Usuario();
 		usuario.setId(usuarioDTO.getId());
 		usuario.setLogin(usuarioDTO.getLogin());
-		usuario.setSenha(usuarioDTO.getSenha());
+
+		String senhaCriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+		usuario.setSenha(senhaCriptografada);
+
 		usuario.setNome(usuarioDTO.getSenha());
 		List<Telefone> telefones = usuarioDTO.getTelefones().stream().map(telDto -> {
 			Telefone telefone = new Telefone();

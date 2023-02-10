@@ -1,5 +1,5 @@
-INSERT INTO usuario (login, senha, nome) VALUES ('usuario1@gmail.com', '3333', 'Usuário 1');
-INSERT INTO usuario (login, senha, nome) VALUES ('teste@gmail.com', '1010', 'Teste Sistema');
+INSERT INTO usuario (login, senha, nome) VALUES ('usuario1@gmail.com', '$2a$10$Wu/RwEfO7IPCpLY7oeZQ.uxRkF1zG.Yiu/ZGdZT.KFJwWJXQ0d4jK', 'Usuário 1');
+INSERT INTO usuario (login, senha, nome) VALUES ('teste@gmail.com', '$2a$10$Wu/RwEfO7IPCpLY7oeZQ.uxRkF1zG.Yiu/ZGdZT.KFJwWJXQ0d4jK', 'Teste Sistema');
 
 INSERT INTO telefone (numero, usuario_id) VALUES ('9999-9988', 1);
 INSERT INTO telefone (numero, usuario_id) VALUES ('3333-4444', 1);
